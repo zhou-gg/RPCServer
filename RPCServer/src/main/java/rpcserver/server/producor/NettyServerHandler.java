@@ -28,6 +28,7 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
         log.info("客户端断开连接!{}", ctx.channel().remoteAddress());
         ctx.channel().close();
     }
+
     @Override
     public  void channelRead(ChannelHandlerContext channelHandlerContext, Object msg){
         try{
@@ -77,6 +78,7 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
             throw new Exception("未找到服务接口,请检查配置!:"+className+"#"+request.getMethodName());
         }
     }
+
     /**
      * 获取参数列表
      * @param parameterTypes
@@ -93,6 +95,7 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
             return new_parameters;
         }
     }
+
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt)throws Exception {
         if (evt instanceof IdleStateEvent){

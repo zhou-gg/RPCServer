@@ -1,4 +1,4 @@
-package rpcserver.server.producor;
+package rpcclient.client.test;
 
 import lombok.Data;
 
