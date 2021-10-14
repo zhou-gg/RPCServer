@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-@Component
+//@Component
 public class NettyServer implements ApplicationContextAware, InitializingBean {
 
     private Map<String, Object> serviceMap = new HashMap<>();
@@ -62,7 +62,8 @@ public class NettyServer implements ApplicationContextAware, InitializingBean {
                         }
                     })
                     .option(ChannelOption.SO_BACKLOG,128)
-                    .childOption(ChannelOption.SO_KEEPALIVE,true);
+                    .childOption(ChannelOption.SO_KEEPALIVE,true)
+                    .childOption(ChannelOption.TCP_NODELAY,true);
             ChannelFuture f = b.bind(port).sync(); // (7)
             f.channel().closeFuture().sync();
         }catch (Exception e){
