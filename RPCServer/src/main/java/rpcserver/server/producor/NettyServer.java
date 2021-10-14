@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-//@Component
+@Component
 public class NettyServer implements ApplicationContextAware, InitializingBean {
 
     private Map<String, Object> serviceMap = new HashMap<>();
@@ -49,22 +49,23 @@ public class NettyServer implements ApplicationContextAware, InitializingBean {
     }
 
     private void run(){
-        EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
-        EventLoopGroup workGroup = new NioEventLoopGroup(); // (1)
+        EventLoopGroup bossGroup = new NioEventLoopGroup();
+        EventLoopGroup workGroup = new NioEventLoopGroup();
         try{
-            ServerBootstrap b = new ServerBootstrap(); // (2)
+            ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup,workGroup)
                     .channel(NioServerSocketChannel.class)
-                    .childHandler(new ChannelInitializer<SocketChannel>() { // (4)
+                    .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline().addLast(new NettyServerHandler(serviceMap));
                         }
                     })
-                    .option(ChannelOption.SO_BACKLOG,128)
+                    .option(ChannelOption.SO_BACKLOG,1288)
                     .childOption(ChannelOption.SO_KEEPALIVE,true)
                     .childOption(ChannelOption.TCP_NODELAY,true);
-            ChannelFuture f = b.bind(port).sync(); // (7)
+            ChannelFuture f = b.bind(port).sync();
+            //等待服务端监听端口关闭
             f.channel().closeFuture().sync();
         }catch (Exception e){
 

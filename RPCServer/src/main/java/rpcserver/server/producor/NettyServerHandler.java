@@ -31,6 +31,7 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
 
     @Override
     public  void channelRead(ChannelHandlerContext channelHandlerContext, Object msg){
+        log.info("得到消息："+msg);
         try{
             RpcRequest rpcRequest = JSON.parseObject(msg.toString(),RpcRequest.class);
             if("heartBeat".equalsIgnoreCase(rpcRequest.getMethodName())){
@@ -108,6 +109,7 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
             super.userEventTriggered(ctx,evt);
         }
     }
+    @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)   {
         log.info("<Netty:RPC服务捕捉异常> 通道名称:[{}] , 异常信息 {}",ctx.name(),cause.getMessage());
         ctx.close();

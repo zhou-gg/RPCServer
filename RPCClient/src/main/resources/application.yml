@@ -1,2 +1,6 @@
+rpc:
+  client:
+    address: 127.0.0.1
+    port: port
 server:
   port: 8082
