@@ -20,20 +20,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-@Component
-public class NettyServer implements ApplicationContextAware, InitializingBean {
+//@Component
+public class NettyServerJava  {
+//public class NettyServerJava implements ApplicationContextAware, InitializingBean {
 
     private Map<String, Object> serviceMap = new HashMap<>();
 
     @Value("${rpc.server.address}")
     private int port;
 
-    @Override
+    //@Override
     public void afterPropertiesSet() throws Exception {
         run();
     }
 
-    @Override
+    //@Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         Map<String, Object> beans = applicationContext.getBeansWithAnnotation(RpcService.class);
         for(Object serviceBean:beans.values()){
@@ -58,7 +59,7 @@ public class NettyServer implements ApplicationContextAware, InitializingBean {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new NettyServerHandler(serviceMap));
+                            ch.pipeline().addLast(new NettyServerHandlerJava(serviceMap));
                         }
                     })
                     .option(ChannelOption.SO_BACKLOG,1288)

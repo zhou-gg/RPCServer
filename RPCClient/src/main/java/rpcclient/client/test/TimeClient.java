@@ -7,18 +7,22 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.codec.string.StringDecoder;
 import org.springframework.beans.factory.annotation.Value;
 
 public class TimeClient {
 
-    @Value("${rpc.client.address}")
-    private static String host = "127.0.0.1";
+    //@Value("${rpc.client.address}")
+    private static String host = "localhost";
 
-    @Value("${rpc.client.port}")
+    //@Value("${rpc.client.port}")
     private static int port = 8081;
 
-    public static void RPCRun(RpcRequest rpcRequest) throws Exception {
+    public static void RPCRun(RpcProto.RpcRequest rpcRequest) throws Exception {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
             Bootstrap b = new Bootstrap();
@@ -28,8 +32,10 @@ public class TimeClient {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new LineBasedFrameDecoder(1024));
-                    ch.pipeline().addLast(new StringDecoder());
+                    ch.pipeline().addLast(new ProtobufVarint32FrameDecoder());
+                    ch.pipeline().addLast(new ProtobufDecoder(RpcProto.RpcResponse.getDefaultInstance()));
+                    ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
+                    ch.pipeline().addLast(new ProtobufEncoder());
                     ch.pipeline().addLast(new TimeClientHandler(rpcRequest));
                 }
             });
@@ -43,18 +49,12 @@ public class TimeClient {
     }
 
     public static void main(String[] args) throws Exception {
-        RpcRequest rpcRequest = new RpcRequest();
-        rpcRequest.setId("6666666");
-        rpcRequest.setClassName("UserServiceImpl");
-        rpcRequest.setMethodName("name");
-        Class<String>[] clazz = new Class[1];
-        clazz[0]=String.class;
-        rpcRequest.setParameterTypes(clazz);
-        String[] params = new String[1];
-        params[0]="测试名称";
-        rpcRequest.setParameters(params);
-        TimeClient.RPCRun(rpcRequest);
-        RpcResponse rpcResponse = RpcResult.get("6666666");
-        System.out.println(JSON.toJSONString(rpcResponse));
+        RpcProto.RpcRequest.Builder rpcRequest = RpcProto.RpcRequest.newBuilder();
+        rpcRequest.setId("6666");
+        rpcRequest.setClassName("ClassName");
+        rpcRequest.setMethodName("Method");
+        TimeClient.RPCRun(rpcRequest.build());
+        //RpcResponse rpcResponse = RpcResult.get("6666666");
+        //System.out.println(JSON.toJSONString(rpcResponse));
     }
 }

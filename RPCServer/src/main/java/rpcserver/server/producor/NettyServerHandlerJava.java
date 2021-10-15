@@ -12,11 +12,11 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 @Slf4j
-public class NettyServerHandler extends ChannelHandlerAdapter {
+public class NettyServerHandlerJava extends ChannelHandlerAdapter {
 
     private final Map<String, Object> serviceMap;
 
-    public NettyServerHandler(Map<String, Object> serviceMap) {
+    public NettyServerHandlerJava(Map<String, Object> serviceMap) {
         this.serviceMap = serviceMap;
     }
     @Override

@@ -25,7 +25,7 @@ import java.util.Map;
 
 @Slf4j
 @Component
-public class NettyServerOrigin implements ApplicationContextAware, InitializingBean {
+public class NettyServerProto implements ApplicationContextAware, InitializingBean {
 
     private Map<String, Object> serviceMap = new HashMap<>();
 
@@ -65,7 +65,7 @@ public class NettyServerOrigin implements ApplicationContextAware, InitializingB
                             //半包处理
                             ch.pipeline().addLast(new ProtobufVarint32FrameDecoder());
                             //解码的目标类
-                            ch.pipeline().addLast(new ProtobufDecoder(RpcRequestProto.RpcRequest.getDefaultInstance()));
+                            ch.pipeline().addLast(new ProtobufDecoder(RpcProto.RpcRequest.getDefaultInstance()));
                             //
                             ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
                             ch.pipeline().addLast(new ProtobufEncoder());

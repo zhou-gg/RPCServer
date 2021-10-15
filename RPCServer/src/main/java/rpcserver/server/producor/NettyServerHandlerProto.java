@@ -1,6 +1,5 @@
 package rpcserver.server.producor;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
@@ -8,7 +7,9 @@ import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
 
-import java.lang.reflect.Method;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Map;
 
 @Slf4j
@@ -31,34 +32,35 @@ public class NettyServerHandlerProto extends ChannelHandlerAdapter {
 
     @Override
     public  void channelRead(ChannelHandlerContext channelHandlerContext, Object msg){
-        log.info("得到消息："+msg);
+        RpcProto.RpcRequest rpcRequest = (RpcProto.RpcRequest) msg;
+        log.info("得到消息："+rpcRequest);
+        RpcProto.RpcResponse.Builder builder = RpcProto.RpcResponse.newBuilder();
         try{
-            RpcRequest rpcRequest = JSON.parseObject((String) msg,RpcRequest.class);
             if("heartBeat".equalsIgnoreCase(rpcRequest.getMethodName())){
                 log.info("<RPC heartBeat>");
             }else {
                 log.info("<RPC客户端请求> 接口名称: [{}] , 方法名称: [{}]",rpcRequest.getClassName(),rpcRequest.getMethodName());
-                RpcResponse rpcResponse = new RpcResponse();
-                rpcResponse.setRequestId(rpcRequest.getId());
+                String id = rpcRequest.getId();
+                builder.setRequestId(id);
                 try{
-                    //Object handler = this.handler(rpcRequest);
-                    //rpcResponse.setData(handler);
-                    channelHandlerContext.writeAndFlush(rpcResponse);
+                    System.out.println();
                 }catch (Throwable throwable) {
                     log.info("<RPC客户端请求> 请求处理出现异常");
                     throwable.printStackTrace();
                 }
             }
+            builder.setCode(200);
         }catch (JSONException exception){
             log.info("<RPC客户端请求>请求数据格式转换错误");
-            channelHandlerContext.writeAndFlush(exception);
-            channelHandlerContext.close();
+            builder.setErrorMsg(getStackTrace(exception));
         }catch (Exception exception){
             log.info("<RPC客户端请求>出现错误");
-            channelHandlerContext.writeAndFlush(exception);
-            channelHandlerContext.close();
+            builder.setErrorMsg(getStackTrace(exception));
         }
+        channelHandlerContext.writeAndFlush(builder.build());
     }
+
+
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) {
@@ -83,5 +85,14 @@ public class NettyServerHandlerProto extends ChannelHandlerAdapter {
         log.info("<Netty:RPC服务捕捉异常> 通道名称:[{}] , 异常信息 {}",ctx.name(),cause.getMessage());
         ctx.close();
         log.info("<Netty:通道已关闭>");
+    }
+
+    public static String getStackTrace(Throwable t) {
+        try(StringWriter sw = new StringWriter();PrintWriter pw = new PrintWriter(sw, true)){
+            t.printStackTrace(pw);
+            return sw.toString();
+        } catch (IOException e) {
+            return "《读取异常错误：IOException》";
+        }
     }
 }
