@@ -53,19 +53,28 @@ public final class RpcProto {
         getMethodNameBytes();
 
     /**
-     * <code>.google.protobuf.Any params = 4;</code>
-     * @return Whether the params field is set.
+     * <code>repeated .google.protobuf.Any params = 4;</code>
      */
-    boolean hasParams();
+    java.util.List<com.google.protobuf.Any> 
+        getParamsList();
     /**
-     * <code>.google.protobuf.Any params = 4;</code>
-     * @return The params.
+     * <code>repeated .google.protobuf.Any params = 4;</code>
      */
-    com.google.protobuf.Any getParams();
+    com.google.protobuf.Any getParams(int index);
     /**
-     * <code>.google.protobuf.Any params = 4;</code>
+     * <code>repeated .google.protobuf.Any params = 4;</code>
      */
-    com.google.protobuf.AnyOrBuilder getParamsOrBuilder();
+    int getParamsCount();
+    /**
+     * <code>repeated .google.protobuf.Any params = 4;</code>
+     */
+    java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
+        getParamsOrBuilderList();
+    /**
+     * <code>repeated .google.protobuf.Any params = 4;</code>
+     */
+    com.google.protobuf.AnyOrBuilder getParamsOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code server.RpcRequest}
@@ -83,6 +92,7 @@ public final class RpcProto {
       id_ = "";
       className_ = "";
       methodName_ = "";
+      params_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -105,6 +115,7 @@ public final class RpcProto {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
+      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -134,16 +145,12 @@ public final class RpcProto {
               break;
             }
             case 34: {
-              com.google.protobuf.Any.Builder subBuilder = null;
-              if (params_ != null) {
-                subBuilder = params_.toBuilder();
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                params_ = new java.util.ArrayList<com.google.protobuf.Any>();
+                mutable_bitField0_ |= 0x00000001;
               }
-              params_ = input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(params_);
-                params_ = subBuilder.buildPartial();
-              }
-
+              params_.add(
+                  input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry));
               break;
             }
             default: {
@@ -161,6 +168,9 @@ public final class RpcProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          params_ = java.util.Collections.unmodifiableList(params_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -293,29 +303,43 @@ public final class RpcProto {
     }
 
     public static final int PARAMS_FIELD_NUMBER = 4;
-    private com.google.protobuf.Any params_;
+    private java.util.List<com.google.protobuf.Any> params_;
     /**
-     * <code>.google.protobuf.Any params = 4;</code>
-     * @return Whether the params field is set.
+     * <code>repeated .google.protobuf.Any params = 4;</code>
      */
     @java.lang.Override
-    public boolean hasParams() {
-      return params_ != null;
+    public java.util.List<com.google.protobuf.Any> getParamsList() {
+      return params_;
     }
     /**
-     * <code>.google.protobuf.Any params = 4;</code>
-     * @return The params.
+     * <code>repeated .google.protobuf.Any params = 4;</code>
      */
     @java.lang.Override
-    public com.google.protobuf.Any getParams() {
-      return params_ == null ? com.google.protobuf.Any.getDefaultInstance() : params_;
+    public java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
+        getParamsOrBuilderList() {
+      return params_;
     }
     /**
-     * <code>.google.protobuf.Any params = 4;</code>
+     * <code>repeated .google.protobuf.Any params = 4;</code>
      */
     @java.lang.Override
-    public com.google.protobuf.AnyOrBuilder getParamsOrBuilder() {
-      return getParams();
+    public int getParamsCount() {
+      return params_.size();
+    }
+    /**
+     * <code>repeated .google.protobuf.Any params = 4;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.Any getParams(int index) {
+      return params_.get(index);
+    }
+    /**
+     * <code>repeated .google.protobuf.Any params = 4;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.AnyOrBuilder getParamsOrBuilder(
+        int index) {
+      return params_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -341,8 +365,8 @@ public final class RpcProto {
       if (!getMethodNameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, methodName_);
       }
-      if (params_ != null) {
-        output.writeMessage(4, getParams());
+      for (int i = 0; i < params_.size(); i++) {
+        output.writeMessage(4, params_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -362,9 +386,9 @@ public final class RpcProto {
       if (!getMethodNameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, methodName_);
       }
-      if (params_ != null) {
+      for (int i = 0; i < params_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getParams());
+          .computeMessageSize(4, params_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -387,11 +411,8 @@ public final class RpcProto {
           .equals(other.getClassName())) return false;
       if (!getMethodName()
           .equals(other.getMethodName())) return false;
-      if (hasParams() != other.hasParams()) return false;
-      if (hasParams()) {
-        if (!getParams()
-            .equals(other.getParams())) return false;
-      }
+      if (!getParamsList()
+          .equals(other.getParamsList())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -409,9 +430,9 @@ public final class RpcProto {
       hash = (53 * hash) + getClassName().hashCode();
       hash = (37 * hash) + METHODNAME_FIELD_NUMBER;
       hash = (53 * hash) + getMethodName().hashCode();
-      if (hasParams()) {
+      if (getParamsCount() > 0) {
         hash = (37 * hash) + PARAMS_FIELD_NUMBER;
-        hash = (53 * hash) + getParams().hashCode();
+        hash = (53 * hash) + getParamsList().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -541,6 +562,7 @@ public final class RpcProto {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getParamsFieldBuilder();
         }
       }
       @java.lang.Override
@@ -553,10 +575,10 @@ public final class RpcProto {
         methodName_ = "";
 
         if (paramsBuilder_ == null) {
-          params_ = null;
+          params_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
-          params_ = null;
-          paramsBuilder_ = null;
+          paramsBuilder_.clear();
         }
         return this;
       }
@@ -584,10 +606,15 @@ public final class RpcProto {
       @java.lang.Override
       public RpcProto.RpcRequest buildPartial() {
         RpcProto.RpcRequest result = new RpcProto.RpcRequest(this);
+        int from_bitField0_ = bitField0_;
         result.id_ = id_;
         result.className_ = className_;
         result.methodName_ = methodName_;
         if (paramsBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            params_ = java.util.Collections.unmodifiableList(params_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
           result.params_ = params_;
         } else {
           result.params_ = paramsBuilder_.build();
@@ -652,8 +679,31 @@ public final class RpcProto {
           methodName_ = other.methodName_;
           onChanged();
         }
-        if (other.hasParams()) {
-          mergeParams(other.getParams());
+        if (paramsBuilder_ == null) {
+          if (!other.params_.isEmpty()) {
+            if (params_.isEmpty()) {
+              params_ = other.params_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureParamsIsMutable();
+              params_.addAll(other.params_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.params_.isEmpty()) {
+            if (paramsBuilder_.isEmpty()) {
+              paramsBuilder_.dispose();
+              paramsBuilder_ = null;
+              params_ = other.params_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              paramsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getParamsFieldBuilder() : null;
+            } else {
+              paramsBuilder_.addAllMessages(other.params_);
+            }
+          }
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -683,6 +733,7 @@ public final class RpcProto {
         }
         return this;
       }
+      private int bitField0_;
 
       private java.lang.Object id_ = "";
       /**
@@ -912,118 +963,239 @@ public final class RpcProto {
         return this;
       }
 
-      private com.google.protobuf.Any params_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> paramsBuilder_;
-      /**
-       * <code>.google.protobuf.Any params = 4;</code>
-       * @return Whether the params field is set.
-       */
-      public boolean hasParams() {
-        return paramsBuilder_ != null || params_ != null;
+      private java.util.List<com.google.protobuf.Any> params_ =
+        java.util.Collections.emptyList();
+      private void ensureParamsIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          params_ = new java.util.ArrayList<com.google.protobuf.Any>(params_);
+          bitField0_ |= 0x00000001;
+         }
       }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> paramsBuilder_;
+
       /**
-       * <code>.google.protobuf.Any params = 4;</code>
-       * @return The params.
+       * <code>repeated .google.protobuf.Any params = 4;</code>
        */
-      public com.google.protobuf.Any getParams() {
+      public java.util.List<com.google.protobuf.Any> getParamsList() {
         if (paramsBuilder_ == null) {
-          return params_ == null ? com.google.protobuf.Any.getDefaultInstance() : params_;
+          return java.util.Collections.unmodifiableList(params_);
         } else {
-          return paramsBuilder_.getMessage();
+          return paramsBuilder_.getMessageList();
         }
       }
       /**
-       * <code>.google.protobuf.Any params = 4;</code>
+       * <code>repeated .google.protobuf.Any params = 4;</code>
        */
-      public Builder setParams(com.google.protobuf.Any value) {
+      public int getParamsCount() {
+        if (paramsBuilder_ == null) {
+          return params_.size();
+        } else {
+          return paramsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .google.protobuf.Any params = 4;</code>
+       */
+      public com.google.protobuf.Any getParams(int index) {
+        if (paramsBuilder_ == null) {
+          return params_.get(index);
+        } else {
+          return paramsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .google.protobuf.Any params = 4;</code>
+       */
+      public Builder setParams(
+          int index, com.google.protobuf.Any value) {
         if (paramsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          params_ = value;
+          ensureParamsIsMutable();
+          params_.set(index, value);
           onChanged();
         } else {
-          paramsBuilder_.setMessage(value);
+          paramsBuilder_.setMessage(index, value);
         }
-
         return this;
       }
       /**
-       * <code>.google.protobuf.Any params = 4;</code>
+       * <code>repeated .google.protobuf.Any params = 4;</code>
        */
       public Builder setParams(
+          int index, com.google.protobuf.Any.Builder builderForValue) {
+        if (paramsBuilder_ == null) {
+          ensureParamsIsMutable();
+          params_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          paramsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .google.protobuf.Any params = 4;</code>
+       */
+      public Builder addParams(com.google.protobuf.Any value) {
+        if (paramsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureParamsIsMutable();
+          params_.add(value);
+          onChanged();
+        } else {
+          paramsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .google.protobuf.Any params = 4;</code>
+       */
+      public Builder addParams(
+          int index, com.google.protobuf.Any value) {
+        if (paramsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureParamsIsMutable();
+          params_.add(index, value);
+          onChanged();
+        } else {
+          paramsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .google.protobuf.Any params = 4;</code>
+       */
+      public Builder addParams(
           com.google.protobuf.Any.Builder builderForValue) {
         if (paramsBuilder_ == null) {
-          params_ = builderForValue.build();
+          ensureParamsIsMutable();
+          params_.add(builderForValue.build());
           onChanged();
         } else {
-          paramsBuilder_.setMessage(builderForValue.build());
+          paramsBuilder_.addMessage(builderForValue.build());
         }
-
         return this;
       }
       /**
-       * <code>.google.protobuf.Any params = 4;</code>
+       * <code>repeated .google.protobuf.Any params = 4;</code>
        */
-      public Builder mergeParams(com.google.protobuf.Any value) {
+      public Builder addParams(
+          int index, com.google.protobuf.Any.Builder builderForValue) {
         if (paramsBuilder_ == null) {
-          if (params_ != null) {
-            params_ =
-              com.google.protobuf.Any.newBuilder(params_).mergeFrom(value).buildPartial();
-          } else {
-            params_ = value;
-          }
+          ensureParamsIsMutable();
+          params_.add(index, builderForValue.build());
           onChanged();
         } else {
-          paramsBuilder_.mergeFrom(value);
+          paramsBuilder_.addMessage(index, builderForValue.build());
         }
-
         return this;
       }
       /**
-       * <code>.google.protobuf.Any params = 4;</code>
+       * <code>repeated .google.protobuf.Any params = 4;</code>
+       */
+      public Builder addAllParams(
+          java.lang.Iterable<? extends com.google.protobuf.Any> values) {
+        if (paramsBuilder_ == null) {
+          ensureParamsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, params_);
+          onChanged();
+        } else {
+          paramsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .google.protobuf.Any params = 4;</code>
        */
       public Builder clearParams() {
         if (paramsBuilder_ == null) {
-          params_ = null;
+          params_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
-          params_ = null;
-          paramsBuilder_ = null;
+          paramsBuilder_.clear();
         }
-
         return this;
       }
       /**
-       * <code>.google.protobuf.Any params = 4;</code>
+       * <code>repeated .google.protobuf.Any params = 4;</code>
        */
-      public com.google.protobuf.Any.Builder getParamsBuilder() {
-        
-        onChanged();
-        return getParamsFieldBuilder().getBuilder();
+      public Builder removeParams(int index) {
+        if (paramsBuilder_ == null) {
+          ensureParamsIsMutable();
+          params_.remove(index);
+          onChanged();
+        } else {
+          paramsBuilder_.remove(index);
+        }
+        return this;
       }
       /**
-       * <code>.google.protobuf.Any params = 4;</code>
+       * <code>repeated .google.protobuf.Any params = 4;</code>
        */
-      public com.google.protobuf.AnyOrBuilder getParamsOrBuilder() {
-        if (paramsBuilder_ != null) {
-          return paramsBuilder_.getMessageOrBuilder();
-        } else {
-          return params_ == null ?
-              com.google.protobuf.Any.getDefaultInstance() : params_;
+      public com.google.protobuf.Any.Builder getParamsBuilder(
+          int index) {
+        return getParamsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .google.protobuf.Any params = 4;</code>
+       */
+      public com.google.protobuf.AnyOrBuilder getParamsOrBuilder(
+          int index) {
+        if (paramsBuilder_ == null) {
+          return params_.get(index);  } else {
+          return paramsBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <code>.google.protobuf.Any params = 4;</code>
+       * <code>repeated .google.protobuf.Any params = 4;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
+      public java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
+           getParamsOrBuilderList() {
+        if (paramsBuilder_ != null) {
+          return paramsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(params_);
+        }
+      }
+      /**
+       * <code>repeated .google.protobuf.Any params = 4;</code>
+       */
+      public com.google.protobuf.Any.Builder addParamsBuilder() {
+        return getParamsFieldBuilder().addBuilder(
+            com.google.protobuf.Any.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .google.protobuf.Any params = 4;</code>
+       */
+      public com.google.protobuf.Any.Builder addParamsBuilder(
+          int index) {
+        return getParamsFieldBuilder().addBuilder(
+            index, com.google.protobuf.Any.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .google.protobuf.Any params = 4;</code>
+       */
+      public java.util.List<com.google.protobuf.Any.Builder> 
+           getParamsBuilderList() {
+        return getParamsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
           com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> 
           getParamsFieldBuilder() {
         if (paramsBuilder_ == null) {
-          paramsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          paramsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder>(
-                  getParams(),
+                  params_,
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           params_ = null;
@@ -1118,19 +1290,28 @@ public final class RpcProto {
         getErrorMsgBytes();
 
     /**
-     * <code>.google.protobuf.Any result = 4;</code>
-     * @return Whether the result field is set.
+     * <code>repeated .google.protobuf.Any result = 4;</code>
      */
-    boolean hasResult();
+    java.util.List<com.google.protobuf.Any> 
+        getResultList();
     /**
-     * <code>.google.protobuf.Any result = 4;</code>
-     * @return The result.
+     * <code>repeated .google.protobuf.Any result = 4;</code>
      */
-    com.google.protobuf.Any getResult();
+    com.google.protobuf.Any getResult(int index);
     /**
-     * <code>.google.protobuf.Any result = 4;</code>
+     * <code>repeated .google.protobuf.Any result = 4;</code>
      */
-    com.google.protobuf.AnyOrBuilder getResultOrBuilder();
+    int getResultCount();
+    /**
+     * <code>repeated .google.protobuf.Any result = 4;</code>
+     */
+    java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
+        getResultOrBuilderList();
+    /**
+     * <code>repeated .google.protobuf.Any result = 4;</code>
+     */
+    com.google.protobuf.AnyOrBuilder getResultOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code server.RpcResponse}
@@ -1147,6 +1328,7 @@ public final class RpcProto {
     private RpcResponse() {
       requestId_ = "";
       errorMsg_ = "";
+      result_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -1169,6 +1351,7 @@ public final class RpcProto {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
+      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -1197,16 +1380,12 @@ public final class RpcProto {
               break;
             }
             case 34: {
-              com.google.protobuf.Any.Builder subBuilder = null;
-              if (result_ != null) {
-                subBuilder = result_.toBuilder();
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                result_ = new java.util.ArrayList<com.google.protobuf.Any>();
+                mutable_bitField0_ |= 0x00000001;
               }
-              result_ = input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(result_);
-                result_ = subBuilder.buildPartial();
-              }
-
+              result_.add(
+                  input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry));
               break;
             }
             default: {
@@ -1224,6 +1403,9 @@ public final class RpcProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          result_ = java.util.Collections.unmodifiableList(result_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -1329,29 +1511,43 @@ public final class RpcProto {
     }
 
     public static final int RESULT_FIELD_NUMBER = 4;
-    private com.google.protobuf.Any result_;
+    private java.util.List<com.google.protobuf.Any> result_;
     /**
-     * <code>.google.protobuf.Any result = 4;</code>
-     * @return Whether the result field is set.
+     * <code>repeated .google.protobuf.Any result = 4;</code>
      */
     @java.lang.Override
-    public boolean hasResult() {
-      return result_ != null;
+    public java.util.List<com.google.protobuf.Any> getResultList() {
+      return result_;
     }
     /**
-     * <code>.google.protobuf.Any result = 4;</code>
-     * @return The result.
+     * <code>repeated .google.protobuf.Any result = 4;</code>
      */
     @java.lang.Override
-    public com.google.protobuf.Any getResult() {
-      return result_ == null ? com.google.protobuf.Any.getDefaultInstance() : result_;
+    public java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
+        getResultOrBuilderList() {
+      return result_;
     }
     /**
-     * <code>.google.protobuf.Any result = 4;</code>
+     * <code>repeated .google.protobuf.Any result = 4;</code>
      */
     @java.lang.Override
-    public com.google.protobuf.AnyOrBuilder getResultOrBuilder() {
-      return getResult();
+    public int getResultCount() {
+      return result_.size();
+    }
+    /**
+     * <code>repeated .google.protobuf.Any result = 4;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.Any getResult(int index) {
+      return result_.get(index);
+    }
+    /**
+     * <code>repeated .google.protobuf.Any result = 4;</code>
+     */
+    @java.lang.Override
+    public com.google.protobuf.AnyOrBuilder getResultOrBuilder(
+        int index) {
+      return result_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -1377,8 +1573,8 @@ public final class RpcProto {
       if (!getErrorMsgBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, errorMsg_);
       }
-      if (result_ != null) {
-        output.writeMessage(4, getResult());
+      for (int i = 0; i < result_.size(); i++) {
+        output.writeMessage(4, result_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -1399,9 +1595,9 @@ public final class RpcProto {
       if (!getErrorMsgBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, errorMsg_);
       }
-      if (result_ != null) {
+      for (int i = 0; i < result_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getResult());
+          .computeMessageSize(4, result_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1424,11 +1620,8 @@ public final class RpcProto {
           != other.getCode()) return false;
       if (!getErrorMsg()
           .equals(other.getErrorMsg())) return false;
-      if (hasResult() != other.hasResult()) return false;
-      if (hasResult()) {
-        if (!getResult()
-            .equals(other.getResult())) return false;
-      }
+      if (!getResultList()
+          .equals(other.getResultList())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -1446,9 +1639,9 @@ public final class RpcProto {
       hash = (53 * hash) + getCode();
       hash = (37 * hash) + ERRORMSG_FIELD_NUMBER;
       hash = (53 * hash) + getErrorMsg().hashCode();
-      if (hasResult()) {
+      if (getResultCount() > 0) {
         hash = (37 * hash) + RESULT_FIELD_NUMBER;
-        hash = (53 * hash) + getResult().hashCode();
+        hash = (53 * hash) + getResultList().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -1578,6 +1771,7 @@ public final class RpcProto {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getResultFieldBuilder();
         }
       }
       @java.lang.Override
@@ -1590,10 +1784,10 @@ public final class RpcProto {
         errorMsg_ = "";
 
         if (resultBuilder_ == null) {
-          result_ = null;
+          result_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
-          result_ = null;
-          resultBuilder_ = null;
+          resultBuilder_.clear();
         }
         return this;
       }
@@ -1621,10 +1815,15 @@ public final class RpcProto {
       @java.lang.Override
       public RpcProto.RpcResponse buildPartial() {
         RpcProto.RpcResponse result = new RpcProto.RpcResponse(this);
+        int from_bitField0_ = bitField0_;
         result.requestId_ = requestId_;
         result.code_ = code_;
         result.errorMsg_ = errorMsg_;
         if (resultBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            result_ = java.util.Collections.unmodifiableList(result_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
           result.result_ = result_;
         } else {
           result.result_ = resultBuilder_.build();
@@ -1688,8 +1887,31 @@ public final class RpcProto {
           errorMsg_ = other.errorMsg_;
           onChanged();
         }
-        if (other.hasResult()) {
-          mergeResult(other.getResult());
+        if (resultBuilder_ == null) {
+          if (!other.result_.isEmpty()) {
+            if (result_.isEmpty()) {
+              result_ = other.result_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureResultIsMutable();
+              result_.addAll(other.result_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.result_.isEmpty()) {
+            if (resultBuilder_.isEmpty()) {
+              resultBuilder_.dispose();
+              resultBuilder_ = null;
+              result_ = other.result_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              resultBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getResultFieldBuilder() : null;
+            } else {
+              resultBuilder_.addAllMessages(other.result_);
+            }
+          }
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1719,6 +1941,7 @@ public final class RpcProto {
         }
         return this;
       }
+      private int bitField0_;
 
       private java.lang.Object requestId_ = "";
       /**
@@ -1903,118 +2126,239 @@ public final class RpcProto {
         return this;
       }
 
-      private com.google.protobuf.Any result_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> resultBuilder_;
-      /**
-       * <code>.google.protobuf.Any result = 4;</code>
-       * @return Whether the result field is set.
-       */
-      public boolean hasResult() {
-        return resultBuilder_ != null || result_ != null;
+      private java.util.List<com.google.protobuf.Any> result_ =
+        java.util.Collections.emptyList();
+      private void ensureResultIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          result_ = new java.util.ArrayList<com.google.protobuf.Any>(result_);
+          bitField0_ |= 0x00000001;
+         }
       }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> resultBuilder_;
+
       /**
-       * <code>.google.protobuf.Any result = 4;</code>
-       * @return The result.
+       * <code>repeated .google.protobuf.Any result = 4;</code>
        */
-      public com.google.protobuf.Any getResult() {
+      public java.util.List<com.google.protobuf.Any> getResultList() {
         if (resultBuilder_ == null) {
-          return result_ == null ? com.google.protobuf.Any.getDefaultInstance() : result_;
+          return java.util.Collections.unmodifiableList(result_);
         } else {
-          return resultBuilder_.getMessage();
+          return resultBuilder_.getMessageList();
         }
       }
       /**
-       * <code>.google.protobuf.Any result = 4;</code>
+       * <code>repeated .google.protobuf.Any result = 4;</code>
        */
-      public Builder setResult(com.google.protobuf.Any value) {
+      public int getResultCount() {
+        if (resultBuilder_ == null) {
+          return result_.size();
+        } else {
+          return resultBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .google.protobuf.Any result = 4;</code>
+       */
+      public com.google.protobuf.Any getResult(int index) {
+        if (resultBuilder_ == null) {
+          return result_.get(index);
+        } else {
+          return resultBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .google.protobuf.Any result = 4;</code>
+       */
+      public Builder setResult(
+          int index, com.google.protobuf.Any value) {
         if (resultBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          result_ = value;
+          ensureResultIsMutable();
+          result_.set(index, value);
           onChanged();
         } else {
-          resultBuilder_.setMessage(value);
+          resultBuilder_.setMessage(index, value);
         }
-
         return this;
       }
       /**
-       * <code>.google.protobuf.Any result = 4;</code>
+       * <code>repeated .google.protobuf.Any result = 4;</code>
        */
       public Builder setResult(
+          int index, com.google.protobuf.Any.Builder builderForValue) {
+        if (resultBuilder_ == null) {
+          ensureResultIsMutable();
+          result_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          resultBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .google.protobuf.Any result = 4;</code>
+       */
+      public Builder addResult(com.google.protobuf.Any value) {
+        if (resultBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureResultIsMutable();
+          result_.add(value);
+          onChanged();
+        } else {
+          resultBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .google.protobuf.Any result = 4;</code>
+       */
+      public Builder addResult(
+          int index, com.google.protobuf.Any value) {
+        if (resultBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureResultIsMutable();
+          result_.add(index, value);
+          onChanged();
+        } else {
+          resultBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .google.protobuf.Any result = 4;</code>
+       */
+      public Builder addResult(
           com.google.protobuf.Any.Builder builderForValue) {
         if (resultBuilder_ == null) {
-          result_ = builderForValue.build();
+          ensureResultIsMutable();
+          result_.add(builderForValue.build());
           onChanged();
         } else {
-          resultBuilder_.setMessage(builderForValue.build());
+          resultBuilder_.addMessage(builderForValue.build());
         }
-
         return this;
       }
       /**
-       * <code>.google.protobuf.Any result = 4;</code>
+       * <code>repeated .google.protobuf.Any result = 4;</code>
        */
-      public Builder mergeResult(com.google.protobuf.Any value) {
+      public Builder addResult(
+          int index, com.google.protobuf.Any.Builder builderForValue) {
         if (resultBuilder_ == null) {
-          if (result_ != null) {
-            result_ =
-              com.google.protobuf.Any.newBuilder(result_).mergeFrom(value).buildPartial();
-          } else {
-            result_ = value;
-          }
+          ensureResultIsMutable();
+          result_.add(index, builderForValue.build());
           onChanged();
         } else {
-          resultBuilder_.mergeFrom(value);
+          resultBuilder_.addMessage(index, builderForValue.build());
         }
-
         return this;
       }
       /**
-       * <code>.google.protobuf.Any result = 4;</code>
+       * <code>repeated .google.protobuf.Any result = 4;</code>
+       */
+      public Builder addAllResult(
+          java.lang.Iterable<? extends com.google.protobuf.Any> values) {
+        if (resultBuilder_ == null) {
+          ensureResultIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, result_);
+          onChanged();
+        } else {
+          resultBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .google.protobuf.Any result = 4;</code>
        */
       public Builder clearResult() {
         if (resultBuilder_ == null) {
-          result_ = null;
+          result_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
-          result_ = null;
-          resultBuilder_ = null;
+          resultBuilder_.clear();
         }
-
         return this;
       }
       /**
-       * <code>.google.protobuf.Any result = 4;</code>
+       * <code>repeated .google.protobuf.Any result = 4;</code>
        */
-      public com.google.protobuf.Any.Builder getResultBuilder() {
-        
-        onChanged();
-        return getResultFieldBuilder().getBuilder();
+      public Builder removeResult(int index) {
+        if (resultBuilder_ == null) {
+          ensureResultIsMutable();
+          result_.remove(index);
+          onChanged();
+        } else {
+          resultBuilder_.remove(index);
+        }
+        return this;
       }
       /**
-       * <code>.google.protobuf.Any result = 4;</code>
+       * <code>repeated .google.protobuf.Any result = 4;</code>
        */
-      public com.google.protobuf.AnyOrBuilder getResultOrBuilder() {
-        if (resultBuilder_ != null) {
-          return resultBuilder_.getMessageOrBuilder();
-        } else {
-          return result_ == null ?
-              com.google.protobuf.Any.getDefaultInstance() : result_;
+      public com.google.protobuf.Any.Builder getResultBuilder(
+          int index) {
+        return getResultFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .google.protobuf.Any result = 4;</code>
+       */
+      public com.google.protobuf.AnyOrBuilder getResultOrBuilder(
+          int index) {
+        if (resultBuilder_ == null) {
+          return result_.get(index);  } else {
+          return resultBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <code>.google.protobuf.Any result = 4;</code>
+       * <code>repeated .google.protobuf.Any result = 4;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
+      public java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
+           getResultOrBuilderList() {
+        if (resultBuilder_ != null) {
+          return resultBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(result_);
+        }
+      }
+      /**
+       * <code>repeated .google.protobuf.Any result = 4;</code>
+       */
+      public com.google.protobuf.Any.Builder addResultBuilder() {
+        return getResultFieldBuilder().addBuilder(
+            com.google.protobuf.Any.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .google.protobuf.Any result = 4;</code>
+       */
+      public com.google.protobuf.Any.Builder addResultBuilder(
+          int index) {
+        return getResultFieldBuilder().addBuilder(
+            index, com.google.protobuf.Any.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .google.protobuf.Any result = 4;</code>
+       */
+      public java.util.List<com.google.protobuf.Any.Builder> 
+           getResultBuilderList() {
+        return getResultFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
           com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> 
           getResultFieldBuilder() {
         if (resultBuilder_ == null) {
-          resultBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          resultBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder>(
-                  getResult(),
+                  result_,
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           result_ = null;
@@ -8983,6 +9327,574 @@ public final class RpcProto {
 
   }
 
+  public interface jsonMessageOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:server.jsonMessage)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string json = 1;</code>
+     * @return The json.
+     */
+    java.lang.String getJson();
+    /**
+     * <code>string json = 1;</code>
+     * @return The bytes for json.
+     */
+    com.google.protobuf.ByteString
+        getJsonBytes();
+  }
+  /**
+   * Protobuf type {@code server.jsonMessage}
+   */
+  public static final class jsonMessage extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:server.jsonMessage)
+      jsonMessageOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use jsonMessage.newBuilder() to construct.
+    private jsonMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private jsonMessage() {
+      json_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new jsonMessage();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private jsonMessage(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              json_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return RpcProto.internal_static_server_jsonMessage_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return RpcProto.internal_static_server_jsonMessage_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              RpcProto.jsonMessage.class, RpcProto.jsonMessage.Builder.class);
+    }
+
+    public static final int JSON_FIELD_NUMBER = 1;
+    private volatile java.lang.Object json_;
+    /**
+     * <code>string json = 1;</code>
+     * @return The json.
+     */
+    @java.lang.Override
+    public java.lang.String getJson() {
+      java.lang.Object ref = json_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        json_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string json = 1;</code>
+     * @return The bytes for json.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getJsonBytes() {
+      java.lang.Object ref = json_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        json_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getJsonBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, json_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getJsonBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, json_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof RpcProto.jsonMessage)) {
+        return super.equals(obj);
+      }
+      RpcProto.jsonMessage other = (RpcProto.jsonMessage) obj;
+
+      if (!getJson()
+          .equals(other.getJson())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + JSON_FIELD_NUMBER;
+      hash = (53 * hash) + getJson().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static RpcProto.jsonMessage parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static RpcProto.jsonMessage parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static RpcProto.jsonMessage parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static RpcProto.jsonMessage parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static RpcProto.jsonMessage parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static RpcProto.jsonMessage parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static RpcProto.jsonMessage parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static RpcProto.jsonMessage parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static RpcProto.jsonMessage parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static RpcProto.jsonMessage parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static RpcProto.jsonMessage parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static RpcProto.jsonMessage parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(RpcProto.jsonMessage prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code server.jsonMessage}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:server.jsonMessage)
+        RpcProto.jsonMessageOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return RpcProto.internal_static_server_jsonMessage_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return RpcProto.internal_static_server_jsonMessage_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                RpcProto.jsonMessage.class, RpcProto.jsonMessage.Builder.class);
+      }
+
+      // Construct using RpcProto.jsonMessage.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        json_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return RpcProto.internal_static_server_jsonMessage_descriptor;
+      }
+
+      @java.lang.Override
+      public RpcProto.jsonMessage getDefaultInstanceForType() {
+        return RpcProto.jsonMessage.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public RpcProto.jsonMessage build() {
+        RpcProto.jsonMessage result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public RpcProto.jsonMessage buildPartial() {
+        RpcProto.jsonMessage result = new RpcProto.jsonMessage(this);
+        result.json_ = json_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof RpcProto.jsonMessage) {
+          return mergeFrom((RpcProto.jsonMessage)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(RpcProto.jsonMessage other) {
+        if (other == RpcProto.jsonMessage.getDefaultInstance()) return this;
+        if (!other.getJson().isEmpty()) {
+          json_ = other.json_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        RpcProto.jsonMessage parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (RpcProto.jsonMessage) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object json_ = "";
+      /**
+       * <code>string json = 1;</code>
+       * @return The json.
+       */
+      public java.lang.String getJson() {
+        java.lang.Object ref = json_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          json_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string json = 1;</code>
+       * @return The bytes for json.
+       */
+      public com.google.protobuf.ByteString
+          getJsonBytes() {
+        java.lang.Object ref = json_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          json_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string json = 1;</code>
+       * @param value The json to set.
+       * @return This builder for chaining.
+       */
+      public Builder setJson(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        json_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string json = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearJson() {
+        
+        json_ = getDefaultInstance().getJson();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string json = 1;</code>
+       * @param value The bytes for json to set.
+       * @return This builder for chaining.
+       */
+      public Builder setJsonBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        json_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:server.jsonMessage)
+    }
+
+    // @@protoc_insertion_point(class_scope:server.jsonMessage)
+    private static final RpcProto.jsonMessage DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new RpcProto.jsonMessage();
+    }
+
+    public static RpcProto.jsonMessage getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<jsonMessage>
+        PARSER = new com.google.protobuf.AbstractParser<jsonMessage>() {
+      @java.lang.Override
+      public jsonMessage parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new jsonMessage(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<jsonMessage> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<jsonMessage> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public RpcProto.jsonMessage getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_server_RpcRequest_descriptor;
   private static final 
@@ -9023,6 +9935,11 @@ public final class RpcProto {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_server_ImageEditObject_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_server_jsonMessage_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_server_jsonMessage_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -9036,9 +9953,9 @@ public final class RpcProto {
       "uf/any.proto\032\034google/protobuf/struct.pro" +
       "to\"e\n\nRpcRequest\022\n\n\002id\030\001 \001(\t\022\021\n\tclassNam" +
       "e\030\002 \001(\t\022\022\n\nmethodName\030\003 \001(\t\022$\n\006params\030\004 " +
-      "\001(\0132\024.google.protobuf.Any\"f\n\013RpcResponse" +
+      "\003(\0132\024.google.protobuf.Any\"f\n\013RpcResponse" +
       "\022\021\n\trequestId\030\001 \001(\t\022\014\n\004code\030\002 \001(\005\022\020\n\010err" +
-      "orMsg\030\003 \001(\t\022$\n\006result\030\004 \001(\0132\024.google.pro" +
+      "orMsg\030\003 \001(\t\022$\n\006result\030\004 \003(\0132\024.google.pro" +
       "tobuf.Any\"<\n\nVisitParam\022\r\n\005phone\030\001 \001(\t\022\n" +
       "\n\002id\030\002 \001(\t\022\023\n\013projectCode\030\003 \001(\t\"B\n\020FreeT" +
       "rafficParam\022\r\n\005phone\030\001 \001(\t\022\n\n\002id\030\002 \001(\t\022\023" +
@@ -9052,7 +9969,8 @@ public final class RpcProto {
       "\030\003 \003(\t\022\023\n\013endDateTime\030\004 \003(\t\022\020\n\010bindRoom\030" +
       "\005 \003(\t\022\r\n\005image\030\006 \003(\t\022\r\n\005state\030\007 \003(\005\",\n\017I" +
       "mageEditObject\022\n\n\002id\030\001 \001(\t\022\r\n\005image\030\002 \001(" +
-      "\tB\014\n\000B\010RpcProtob\006proto3"
+      "\t\"\033\n\013jsonMessage\022\014\n\004json\030\001 \001(\tB\014\n\000B\010RpcP" +
+      "rotob\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -9108,6 +10026,12 @@ public final class RpcProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_server_ImageEditObject_descriptor,
         new java.lang.String[] { "Id", "Image", });
+    internal_static_server_jsonMessage_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_server_jsonMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_server_jsonMessage_descriptor,
+        new java.lang.String[] { "Json", });
     com.google.protobuf.AnyProto.getDescriptor();
     com.google.protobuf.StructProto.getDescriptor();
   }

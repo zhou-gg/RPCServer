@@ -42,7 +42,6 @@ public class NettyServerHandlerJava extends ChannelHandlerAdapter {
                 rpcResponse.setRequestId(rpcRequest.getId());
                 try{
                     Object handler = this.handler(rpcRequest);
-                    rpcResponse.setData(handler);
                     channelHandlerContext.writeAndFlush(rpcResponse);
                 }catch (Throwable throwable) {
                     log.info("<RPC客户端请求> 请求处理出现异常");
@@ -70,8 +69,8 @@ public class NettyServerHandlerJava extends ChannelHandlerAdapter {
         if (serviceBean!=null){
             Class<?> serviceClass = serviceBean.getClass();
             String methodName = request.getMethodName();
-            Class<?>[] parameterTypes = request.getParameterTypes();
-            Object[] parameters = request.getParameters();
+            Class<?>[] parameterTypes = null ;
+            Object[] parameters = null;
             Method method = serviceClass.getMethod(methodName, parameterTypes);
             method.setAccessible(true);
             return method.invoke(serviceBean, getParameters(parameterTypes,parameters));

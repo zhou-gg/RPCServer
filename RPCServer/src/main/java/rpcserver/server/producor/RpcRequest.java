@@ -8,7 +8,6 @@ public class RpcRequest {
     private String id;
     private String className;
     private String methodName;
-    private Class<?>[] parameterTypes;
-    private Object[] parameters;
+    private Object[] params;
 
 }

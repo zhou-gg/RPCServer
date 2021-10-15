@@ -47,10 +47,10 @@ public class TimeClientSolveHandlerPack extends ChannelHandlerAdapter {
         rpcRequest.setMethodName("name");
         Class<String>[] clazz = new Class[1];
         clazz[0]=String.class;
-        rpcRequest.setParameterTypes(clazz);
+        //rpcRequest.setParameterTypes(clazz);
         String[] params = new String[1];
         params[0]="测试名称";
-        rpcRequest.setParameters(params);
+        //rpcRequest.setParameters(params);
         req=JSON.toJSONString(rpcRequest).getBytes();
         for (int i=0;i<100;i++){
             ByteBuf firstMessage = Unpooled.buffer(req.length);

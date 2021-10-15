@@ -1,6 +1,9 @@
 package rpcclient.client.test;
 
 import com.alibaba.fastjson.JSON;
+import com.google.protobuf.Any;
+import com.google.protobuf.ByteOutput;
+import com.google.protobuf.ByteString;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -13,6 +16,8 @@ import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.codec.string.StringDecoder;
 import org.springframework.beans.factory.annotation.Value;
+
+import java.nio.charset.Charset;
 
 public class TimeClient {
 
@@ -50,11 +55,16 @@ public class TimeClient {
 
     public static void main(String[] args) throws Exception {
         RpcProto.RpcRequest.Builder rpcRequest = RpcProto.RpcRequest.newBuilder();
-        rpcRequest.setId("6666");
-        rpcRequest.setClassName("ClassName");
-        rpcRequest.setMethodName("Method");
+        Any zz = Any.newBuilder().setValue(ByteString.copyFrom("周洪召", Charset.forName("UTF-8"))).build();
+
+        rpcRequest.setId("6666666");
+        rpcRequest.setClassName("UserServiceImpl");
+        rpcRequest.setMethodName("name");
+        rpcRequest.addParamsBuilder(0);
+        rpcRequest.setParams(0,zz);
         TimeClient.RPCRun(rpcRequest.build());
-        //RpcResponse rpcResponse = RpcResult.get("6666666");
-        //System.out.println(JSON.toJSONString(rpcResponse));
+        RpcResponse rpcResponse = RpcResult.get("6666666");
+        System.out.println("==============================输出结果集==============================");
+        System.out.println(JSON.toJSONString(rpcResponse));
     }
 }

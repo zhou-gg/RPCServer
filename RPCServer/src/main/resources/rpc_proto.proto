@@ -14,13 +14,13 @@ message RpcRequest{
     string id = 1;
     string className = 2;
     string methodName = 3;
-    google.protobuf.Any params = 4;
+    repeated google.protobuf.Any params = 4;
 }
 message RpcResponse{
     string requestId = 1;
     int32  code = 2;
     string errorMsg = 3;
-    google.protobuf.Any result = 4;
+    repeated google.protobuf.Any result = 4;
 }
 //访客登记请求入参
 message VisitParam{
@@ -62,4 +62,7 @@ message VisitObject{
 message ImageEditObject{
     string id = 1;
     string image = 2;
+}
+message jsonMessage{
+    string json = 1;
 }

@@ -39,16 +39,7 @@ public class NettyServerProto implements ApplicationContextAware, InitializingBe
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        Map<String, Object> beans = applicationContext.getBeansWithAnnotation(RpcService.class);
-        for(Object serviceBean:beans.values()){
-            Class<?> clazz = serviceBean.getClass();
-            Class<?>[] interfaces = clazz.getInterfaces();
-            for (Class<?> inter : interfaces){
-                String interfaceName = inter.getName();
-                log.info("<加载服务类> : {}", interfaceName);
-                serviceMap.put(interfaceName, serviceBean);
-            }
-        }
+        serviceMap = applicationContext.getBeansWithAnnotation(RpcService.class);
         log.info("<已加载全部服务接口> : {}", serviceMap);
     }
 
@@ -66,14 +57,14 @@ public class NettyServerProto implements ApplicationContextAware, InitializingBe
                             ch.pipeline().addLast(new ProtobufVarint32FrameDecoder());
                             //解码的目标类
                             ch.pipeline().addLast(new ProtobufDecoder(RpcProto.RpcRequest.getDefaultInstance()));
-                            //
+                            //其他编码处理
                             ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
                             ch.pipeline().addLast(new ProtobufEncoder());
                             ch.pipeline().addLast(new NettyServerHandlerProto(serviceMap));
                         }
                     })
-                    .option(ChannelOption.SO_BACKLOG,1024);
-                    //.childOption(ChannelOption.SO_KEEPALIVE,true)
+                    .option(ChannelOption.SO_BACKLOG,1024)
+                    .childOption(ChannelOption.SO_KEEPALIVE,true);
                     //.childOption(ChannelOption.TCP_NODELAY,true);
             ChannelFuture f = b.bind(port).sync();
             //等待服务端监听端口关闭

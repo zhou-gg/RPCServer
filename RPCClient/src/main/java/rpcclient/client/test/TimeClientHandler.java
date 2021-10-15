@@ -1,12 +1,16 @@
 package rpcclient.client.test;
 
 import com.alibaba.fastjson.JSON;
+import com.google.protobuf.Any;
 import com.google.protobuf.ProtocolStringList;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 
 @Slf4j
@@ -22,10 +26,32 @@ public class TimeClientHandler extends ChannelHandlerAdapter {
         ctx.writeAndFlush(rpcResponse);
     }
 
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        RpcProto.RpcResponse response = (RpcProto.RpcResponse) msg;
-        String errorMsg = response.getErrorMsg();
-        log.info("<得到消息>：" + JSON.toJSONString(errorMsg));
+    public void channelRead(ChannelHandlerContext ctx, Object msg){
+        try{
+            RpcProto.RpcResponse response = (RpcProto.RpcResponse) msg;
+            RpcResponse responseData = new RpcResponse();
+            log.info("<得到消息>：" + response);
+            responseData.setRequestId(response.getRequestId());
+            responseData.setCode(response.getCode());
+            responseData.setErrorMsg(response.getErrorMsg());
+            List<Any> resultList = response.getResultList();
+            if(resultList.size()>0){
+                String[] results = new String[resultList.size()];
+                Integer index = 0;
+                for (Any any:resultList){
+                    try {
+                        results[index] = any.getValue().toString("UTF-8");
+                        index++;
+                    } catch (UnsupportedEncodingException e) {
+                        log.info("<Netty:结果转换异常>：[{}]",e);
+                    }
+                }
+                responseData.setResult(results);
+            }
+            RpcResult.add(responseData);
+        }finally {
+            ctx.close();
+        }
     }
 
     @Override
