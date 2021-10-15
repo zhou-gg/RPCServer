@@ -6,6 +6,8 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 import org.springframework.beans.factory.annotation.Value;
 
 public class TimeClient {
@@ -22,10 +24,12 @@ public class TimeClient {
             Bootstrap b = new Bootstrap();
             b.group(workerGroup);
             b.channel(NioSocketChannel.class);
-            b.option(ChannelOption.SO_KEEPALIVE, true);
+            b.option(ChannelOption.TCP_NODELAY, true);
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
+                    ch.pipeline().addLast(new LineBasedFrameDecoder(1024));
+                    ch.pipeline().addLast(new StringDecoder());
                     ch.pipeline().addLast(new TimeClientHandler(rpcRequest));
                 }
             });

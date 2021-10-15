@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package server;
+//option java_multiple_files = true;
+option java_package = "";
+option java_outer_classname = "RpcRequestProto";
+
+message RpcRequest{
+    repeated string id = 1;
+    repeated string className = 2;
+    repeated string methodName = 3;
+}
+message RpcResponse{
+    repeated string requestId = 1;
+    repeated int32  code = 2;
+    repeated string errorMsg = 3;
+}

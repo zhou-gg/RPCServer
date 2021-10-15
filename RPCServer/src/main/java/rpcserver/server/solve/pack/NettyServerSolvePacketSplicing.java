@@ -28,8 +28,6 @@ public class NettyServerSolvePacketSplicing {
             //等待服务端关闭
             ChannelFuture f = s.bind(port).sync();
             f.channel().closeFuture().sync();
-        }catch (Exception exception){
-
         }finally {
             //优雅的退出释放资源
             bossGroup.shutdownGracefully();
@@ -39,16 +37,16 @@ public class NettyServerSolvePacketSplicing {
 
     private class ChildChannelHandler extends ChannelInitializer<SocketChannel> {
         @Override
-        protected void initChannel(SocketChannel arg0) throws Exception {
+        protected void initChannel(SocketChannel arg0) {
+            arg0.pipeline().addLast(new LineBasedFrameDecoder(1024));
+            arg0.pipeline().addLast(new StringDecoder());
             arg0.pipeline().addLast(new TimeServerSolveHandlerPack());
             //防止出现 PacketSplicing
-            arg0.pipeline().addLast(new StringDecoder());
-            arg0.pipeline().addLast(new LineBasedFrameDecoder(1024));
         }
     }
 
     public static void main(String[] args) throws Exception {
-        int port = 8081;
+        int port = 8082;
         new NettyServerSolvePacketSplicing().bind(port);
     }
 

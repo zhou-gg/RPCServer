@@ -15,10 +15,12 @@
  */
 package rpcclient.client.solve.pack;
 
+import com.alibaba.fastjson.JSON;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import rpcclient.client.test.RpcRequest;
 
 /**
  * @author lilinfeng
@@ -38,8 +40,18 @@ public class TimeClientSolveHandlerPack extends ChannelHandlerAdapter {
 
     }
 
-    @Override
     public void channelActive(ChannelHandlerContext ctx) {
+        RpcRequest rpcRequest = new RpcRequest();
+        rpcRequest.setId("6666666");
+        rpcRequest.setClassName("UserServiceImpl");
+        rpcRequest.setMethodName("name");
+        Class<String>[] clazz = new Class[1];
+        clazz[0]=String.class;
+        rpcRequest.setParameterTypes(clazz);
+        String[] params = new String[1];
+        params[0]="测试名称";
+        rpcRequest.setParameters(params);
+        req=JSON.toJSONString(rpcRequest).getBytes();
         for (int i=0;i<100;i++){
             ByteBuf firstMessage = Unpooled.buffer(req.length);
             firstMessage.writeBytes(req);
@@ -47,7 +59,6 @@ public class TimeClientSolveHandlerPack extends ChannelHandlerAdapter {
         }
     }
 
-    @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         String body = (String) msg;
 	    System.out.println("Now is : " + body + " is counter :" + ++counter);

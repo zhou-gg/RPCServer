@@ -15,7 +15,7 @@ public class TimeServerSolveHandlerPack extends ChannelHandlerAdapter {
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
         String body = (String)msg;
         System.out.println("The time server receive order : " + body +" the counter is : " + ++counter);
         String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ? (new Date(System.currentTimeMillis())).toString() : "BAD ORDER";
@@ -25,7 +25,7 @@ public class TimeServerSolveHandlerPack extends ChannelHandlerAdapter {
     }
 
     @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+    public void channelReadComplete(ChannelHandlerContext ctx) {
         ctx.flush();
     }
 

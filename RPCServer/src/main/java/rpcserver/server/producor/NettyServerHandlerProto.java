@@ -12,11 +12,11 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 @Slf4j
-public class NettyServerHandler extends ChannelHandlerAdapter {
+public class NettyServerHandlerProto extends ChannelHandlerAdapter {
 
     private final Map<String, Object> serviceMap;
 
-    public NettyServerHandler(Map<String, Object> serviceMap) {
+    public NettyServerHandlerProto(Map<String, Object> serviceMap) {
         this.serviceMap = serviceMap;
     }
     @Override
@@ -41,8 +41,8 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
                 RpcResponse rpcResponse = new RpcResponse();
                 rpcResponse.setRequestId(rpcRequest.getId());
                 try{
-                    Object handler = this.handler(rpcRequest);
-                    rpcResponse.setData(handler);
+                    //Object handler = this.handler(rpcRequest);
+                    //rpcResponse.setData(handler);
                     channelHandlerContext.writeAndFlush(rpcResponse);
                 }catch (Throwable throwable) {
                     log.info("<RPC客户端请求> 请求处理出现异常");
@@ -57,43 +57,6 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
             log.info("<RPC客户端请求>出现错误");
             channelHandlerContext.writeAndFlush(exception);
             channelHandlerContext.close();
-        }
-    }
-
-    /**
-     * 通过反射，执行本地方法
-     */
-    private Object handler(RpcRequest request) throws Throwable{
-        String className = request.getClassName();
-        Object serviceBean = serviceMap.get(className);
-
-        if (serviceBean!=null){
-            Class<?> serviceClass = serviceBean.getClass();
-            String methodName = request.getMethodName();
-            Class<?>[] parameterTypes = request.getParameterTypes();
-            Object[] parameters = request.getParameters();
-            Method method = serviceClass.getMethod(methodName, parameterTypes);
-            method.setAccessible(true);
-            return method.invoke(serviceBean, getParameters(parameterTypes,parameters));
-        }else{
-            throw new Exception("未找到服务接口,请检查配置!:"+className+"#"+request.getMethodName());
-        }
-    }
-
-    /**
-     * 获取参数列表
-     * @param parameterTypes
-     * @param parameters
-     */
-    private Object[] getParameters(Class<?>[] parameterTypes,Object[] parameters){
-        if (parameters==null || parameters.length==0){
-            return parameters;
-        }else{
-            Object[] new_parameters = new Object[parameters.length];
-            for(int i=0;i<parameters.length;i++){
-                new_parameters[i] = JSON.parseObject(parameters[i].toString(),parameterTypes[i]);
-            }
-            return new_parameters;
         }
     }
 

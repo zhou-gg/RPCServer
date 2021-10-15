@@ -40,7 +40,6 @@ public class TimeClientHandlerPack extends ChannelHandlerAdapter {
 
     }
 
-    @Override
     public void channelActive(ChannelHandlerContext ctx) {
         for (int i=0;i<100;i++){
             ByteBuf firstMessage = Unpooled.buffer(req.length);
@@ -49,7 +48,6 @@ public class TimeClientHandlerPack extends ChannelHandlerAdapter {
         }
     }
 
-    @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 	    ByteBuf buf = (ByteBuf) msg;
 	    byte[] req = new byte[buf.readableBytes()];
@@ -58,7 +56,6 @@ public class TimeClientHandlerPack extends ChannelHandlerAdapter {
 	    System.out.println("Now is : " + body + " is counter :" + ++counter);
     }
 
-    @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 	    //释放资源
 	    ctx.close();
