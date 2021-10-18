@@ -22,10 +22,10 @@ import java.nio.charset.Charset;
 public class TimeClient {
 
     //@Value("${rpc.client.address}")
-    private static String host = "localhost";
+    private static String host = "127.0.0.1";
 
     //@Value("${rpc.client.port}")
-    private static int port = 8081;
+    private static int port = 7777;
 
     public static void RPCRun(RpcProto.RpcRequest rpcRequest) throws Exception {
         EventLoopGroup workerGroup = new NioEventLoopGroup();

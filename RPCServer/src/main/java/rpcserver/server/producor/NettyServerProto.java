@@ -66,7 +66,7 @@ public class NettyServerProto implements ApplicationContextAware, InitializingBe
                     .option(ChannelOption.SO_BACKLOG,1024)
                     .childOption(ChannelOption.SO_KEEPALIVE,true);
                     //.childOption(ChannelOption.TCP_NODELAY,true);
-            ChannelFuture f = b.bind(port).sync();
+            ChannelFuture f = b.bind("127.0.0.1",port).sync();
             //等待服务端监听端口关闭
             f.channel().closeFuture().sync();
         }catch (Exception e){

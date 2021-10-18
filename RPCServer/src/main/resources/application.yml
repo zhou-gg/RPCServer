@@ -1,5 +1,5 @@
 rpc:
   server:
-    address: 8081
+    address: 7770
 server:
   port: 8080
